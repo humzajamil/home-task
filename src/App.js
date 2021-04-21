@@ -39,7 +39,11 @@ const App = () => {
         {gistData.map((userGist) => (
           <>
             <br />
-            <a href={`userGist["url"]`}>{userGist["url"]}</a>
+            <div className="record">
+              <a href={`userGist["url"]`}>{userGist["url"]}</a>
+              <p>{Object.keys(userGist["files"])[0].split(".")[1]}</p>
+            </div>
+
             <br />
           </>
         ))}

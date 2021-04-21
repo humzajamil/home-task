@@ -27,3 +27,9 @@
 .linkDisplay {
   padding-left: 10%;
 }
+
+h2 {
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
+}

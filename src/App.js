@@ -34,7 +34,7 @@ const App = () => {
           search
         </button>
       </div>
-      {showh2 ? <h2>public gists by {h2}</h2> : null}
+      {showh2 ? <h2>Gists by {h2}</h2> : null}
       <div className="linkDisplay">
         {gistData.map((userGist) => (
           <>

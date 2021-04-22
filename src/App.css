@@ -14,9 +14,17 @@
   height: 25px;
   background-color: white;
   color: gray;
+  border: none;
   border-radius: 5px;
-  border-width: 1px;
+  /* border-width: 1px; */
   padding-left: 10px;
+}
+.input:hover {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px whitesmoke;
+  outline: 0 none;
+}
+.input:focus {
+  border: none;
 }
 
 .btn {
@@ -55,21 +63,27 @@ a {
   color: black;
 }
 
-span {
+span:hover {
   text-decoration: underline;
   cursor: pointer;
+  background-color: rgb(45, 135, 238);
+  color: white;
 }
 
 .content {
-  margin-left: 13.5%;
-  margin-right: 45%;
+  margin-left: 13.75%;
+  margin-right: 44%;
   background-color: white;
   color: black;
   word-wrap: break-word;
 }
 
 .loader {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
 }

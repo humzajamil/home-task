@@ -12,6 +12,8 @@ const App = () => {
   const [content, setContent] = useState({})
   const [loader, showLoader] = useState(false)
   let forkIDS = []
+
+  
   const URL = `https://api.github.com/users/${userName}/gists`;
 
   const getGistData = async () => {
@@ -60,7 +62,7 @@ const App = () => {
 }
   return (
     <>
-    <div className="loader">
+    {loader ? (<div className="loader">
         <Loader
         type="Puff"
         color="black"
@@ -68,7 +70,8 @@ const App = () => {
         width={100}
         visible = {loader}
       />
-      </div>
+      </div>) : (
+      <>
       <div className="container">
         <input
           className="input"
@@ -80,7 +83,7 @@ const App = () => {
           search
         </button>
       </div>
-      {showh2 ? <h2>Gists by {h2}</h2> : null}
+      <div>{showh2 ? <h2>Gists by {h2}</h2> : null}</div>
       <div className="linkDisplay">
         {gistData.map((userGist) => (
           <>
@@ -99,6 +102,7 @@ const App = () => {
           </>
         ))}
       </div>
+      </>)}
     </>
   );
 };

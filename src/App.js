@@ -6,11 +6,13 @@ import "./App.css";
 const App = () => {
   const [gistData, setGistData] = useState([]);
   const [userName, setUserName] = useState("");
-  const [h2, setH2] = useState("");
-  const [showh2, setShowh2] = useState(false);
+  const [gistUserName, setGistUserName] = useState("");
+  const [showGistUserName, setShowGistUserName] = useState(false);
   const [showContent, setShowContent] = useState(false)
-  const [content, setContent] = useState({})
+  const [gistApiContent, setGistApiContent] = useState({})
   const [loader, showLoader] = useState(false)
+
+  
   let forkIDS = []
 
   
@@ -28,8 +30,8 @@ const App = () => {
       return
     }
     setGistData(response.data);
-    setH2(userName);
-    setShowh2(true);
+    setGistUserName(userName);
+    setShowGistUserName(true);
     getForkList(response.data)
     showLoader(false)
   };
@@ -57,19 +59,20 @@ const App = () => {
   const displayContent = async (user) => {
     let arr = Object.entries(user["files"])
     let response = await axios.get(arr[0][1].raw_url)
-    setContent({data: response.data, url : user["url"]})
+    setGistApiContent({data: response.data, url : user["url"]})
     showContent ? setShowContent(false) : setShowContent(true)
 }
   return (
     <>
     {loader ? (<div className="loader">
         <Loader
-        type="Puff"
+        type="Circles"
         color="black"
         height={100}
         width={100}
         visible = {loader}
       />
+      <h2 style={{textDecoration: 'none'}}>Loading...</h2>
       </div>) : (
       <>
       <div className="container">
@@ -83,7 +86,7 @@ const App = () => {
           search
         </button>
       </div>
-      <div>{showh2 ? <h2>Gists by {h2}</h2> : null}</div>
+      <div>{showGistUserName ? <h2>Gists by {gistUserName}</h2> : null}</div>
       <div className="linkDisplay">
         {gistData.map((userGist) => (
           <>
@@ -92,9 +95,9 @@ const App = () => {
               <span className="link" onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
               <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'C#' : Object.keys(userGist["files"])[0].split(".")[1]} </p>
             </div>
-            {showContent && userGist["url"] === content.url ?
+            {showContent && userGist["url"] === gistApiContent.url ?
                 <div className="content">
-                  {content.data}
+                  {gistApiContent.data}
                 </div> 
               : null}
 

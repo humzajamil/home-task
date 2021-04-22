@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Loader from "react-loader-spinner";
 import axios from "axios";
 import "./App.css";
 
@@ -7,21 +8,28 @@ const App = () => {
   const [userName, setUserName] = useState("");
   const [h2, setH2] = useState("");
   const [showh2, setShowh2] = useState(false);
-  const [gistID, setGistID] = useState('');
   const [showContent, setShowContent] = useState(false)
   const [content, setContent] = useState({})
+  const [loader, showLoader] = useState(false)
   let forkIDS = []
-  let forkUsers = []
-  let key = ''
   const URL = `https://api.github.com/users/${userName}/gists`;
-  const ForkURL = `https://api.github.com/gists/${gistID}/forks`;
 
   const getGistData = async () => {
+    showLoader(true)
+    if(userName.length === 0) {
+      alert("Please enter a username")
+      return
+    }
     const response = await axios.get(URL);
+    if(response.data.length === 0) {
+      alert("No record found")
+      return
+    }
     setGistData(response.data);
     setH2(userName);
     setShowh2(true);
     getForkList(response.data)
+    showLoader(false)
   };
 
   const getForkList = (data) => {
@@ -32,12 +40,12 @@ const App = () => {
     // console.log(forkUsers)
     // data.map(item => console.log(item.id))
     // console.log(ForkURL)
-    
   };
 
   const getForkDATA = async (ids) => {
-    setGistID(ids)
     const response = await axios.get(`https://api.github.com/gists/${ids}/forks`);
+    console.log(response)
+
   }
 
   const updateUserName = (e) => {
@@ -50,10 +58,17 @@ const App = () => {
     setContent({data: response.data, url : user["url"]})
     showContent ? setShowContent(false) : setShowContent(true)
 }
-  
-
   return (
     <>
+    <div className="loader">
+        <Loader
+        type="Puff"
+        color="black"
+        height={100}
+        width={100}
+        visible = {loader}
+      />
+      </div>
       <div className="container">
         <input
           className="input"

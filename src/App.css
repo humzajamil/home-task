@@ -22,6 +22,7 @@
 .btn {
   color: grey;
   background-color: black;
+  cursor: pointer;
 }
 
 .linkDisplay {
@@ -56,6 +57,7 @@ a {
 
 span {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .content {

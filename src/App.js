@@ -11,7 +11,7 @@ const App = () => {
   const [showContent, setShowContent] = useState(false)
   const [gistApiContent, setGistApiContent] = useState({})
   const [loader, showLoader] = useState(false)
-  const [avatars, setAvatars] = useState({});
+  const [forkUsers, setForkUser] = useState({});
 
   let forkIDS = []
 
@@ -31,21 +31,18 @@ const App = () => {
       showLoader(false)
       return
     }
+    getForkList(response.data)
     setGistData(response.data);
     setGistUserName(userName);
     setShowGistUserName(true);
-    getForkList(response.data)
+    setUserName("")
     showLoader(false)
   };
-// useEffect(() => {
-//   // console.log(Object.keys(avatars).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
-//   console.log(Object.keys(avatars));
-// },)
   const getForkList = (data) => {
 
     data.map(item => forkIDS.push(item.id))
     forkIDS.map(ids => getForkData(ids))
-    // console.log(Object.keys(avatars).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
+    // console.log(Object.keys(forkUsers).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
   };
 
   const getForkData = async (ids) => {
@@ -56,12 +53,12 @@ const App = () => {
       response.data.map(user => (
         users.push([user.owner.login])
       ))
-      setAvatars(oldAvatars => {
-        oldAvatars[ids] = users.slice(-3)
-        return oldAvatars;
+      setForkUser(preForkUsers => {
+        preForkUsers[ids] = users.slice(-3)
+        return preForkUsers; 
       })
     }
-    console.log(ids, avatars[ids])
+    console.log(ids, forkUsers[ids])
     
   }
 
@@ -106,10 +103,10 @@ const App = () => {
             <br />
             <div className="record">
               <span className="link" onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
-              <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'C#' : Object.keys(userGist["files"])[0].split(".")[1]} </p>
-              {(userGist["id"]) in avatars ? 
-                <p>{`${avatars[userGist["id"]][0]}, ${avatars[userGist["id"]][1]},${avatars[userGist["id"]][2]}`}</p> 
-              : null }
+              <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'c#' : Object.keys(userGist["files"])[0].split(".")[1]} </p>
+              {(userGist["id"]) in forkUsers ? 
+                <p>{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 
+              : <p>none</p> }
             </div>
             {showContent && userGist["url"] === gistApiContent.url ?
                 <div className="content">

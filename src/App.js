@@ -48,7 +48,6 @@ const App = () => {
 
   const getForkData = async (ids) => {
     let users = []
-
     const response = await axios.get(`https://api.github.com/gists/${ids}/forks`);
     if(response.data.length !== 0 ) {
       response.data.map(user => (
@@ -59,7 +58,7 @@ const App = () => {
         return preForkUsers; 
       })
     }
-    console.log(ids, forkUsers[ids])
+    // console.log(ids, forkUsers[ids])
     
   }
 
@@ -107,9 +106,8 @@ const App = () => {
         {gistData.map((userGist) => (
           <>
             <br />
-            <div className="record">
+            <div key={userGist["id"]} className="record">
               <span onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
-              {/* <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'c#' : Object.keys(userGist["files"])[0].split(".")[1]} </p> */}
               <p>{getLanguage(userGist)}</p>
                 {(userGist["id"]) in forkUsers ? 
                   <p>{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 

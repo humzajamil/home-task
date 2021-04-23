@@ -11,8 +11,8 @@ const App = () => {
   const [showContent, setShowContent] = useState(false)
   const [gistApiContent, setGistApiContent] = useState({})
   const [loader, showLoader] = useState(false)
+  const [avatars, setAvatars] = useState({});
 
-  
   let forkIDS = []
 
   
@@ -22,11 +22,13 @@ const App = () => {
     showLoader(true)
     if(userName.length === 0) {
       alert("Please enter a username")
+      showLoader(false)
       return
     }
     const response = await axios.get(URL);
     if(response.data.length === 0) {
       alert("No record found")
+      showLoader(false)
       return
     }
     setGistData(response.data);
@@ -35,21 +37,32 @@ const App = () => {
     getForkList(response.data)
     showLoader(false)
   };
-
+// useEffect(() => {
+//   // console.log(Object.keys(avatars).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
+//   console.log(Object.keys(avatars));
+// },)
   const getForkList = (data) => {
 
     data.map(item => forkIDS.push(item.id))
-    forkIDS.map(ids => getForkDATA(ids))
-      // forkUsers.push(response.owner.login)
-    // console.log(forkUsers)
-    // data.map(item => console.log(item.id))
-    // console.log(ForkURL)
+    forkIDS.map(ids => getForkData(ids))
+    // console.log(Object.keys(avatars).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
   };
 
-  const getForkDATA = async (ids) => {
-    const response = await axios.get(`https://api.github.com/gists/${ids}/forks`);
-    console.log(response)
+  const getForkData = async (ids) => {
+    let users = []
 
+    const response = await axios.get(`https://api.github.com/gists/${ids}/forks`);
+    if(response.data.length !== 0 ) {
+      response.data.map(user => (
+        users.push([user.owner.login])
+      ))
+      setAvatars(oldAvatars => {
+        oldAvatars[ids] = users.slice(-3)
+        return oldAvatars;
+      })
+    }
+    console.log(ids, avatars[ids])
+    
   }
 
   const updateUserName = (e) => {
@@ -94,6 +107,9 @@ const App = () => {
             <div className="record">
               <span className="link" onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
               <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'C#' : Object.keys(userGist["files"])[0].split(".")[1]} </p>
+              {(userGist["id"]) in avatars ? 
+                <p>{`${avatars[userGist["id"]][0]}, ${avatars[userGist["id"]][1]},${avatars[userGist["id"]][2]}`}</p> 
+              : null }
             </div>
             {showContent && userGist["url"] === gistApiContent.url ?
                 <div className="content">

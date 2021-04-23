@@ -45,6 +45,7 @@ const App = () => {
     // console.log(Object.keys(forkUsers).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
   };
 
+
   const getForkData = async (ids) => {
     let users = []
 
@@ -72,6 +73,11 @@ const App = () => {
     setGistApiContent({data: response.data, url : user["url"]})
     showContent ? setShowContent(false) : setShowContent(true)
 }
+  const getLanguage = (user) => {
+    let arr = Object.entries(user["files"])
+    let response = arr[0][1].language
+    return response
+  }
   return (
     <>
     {loader ? (<div className="loader">
@@ -102,11 +108,12 @@ const App = () => {
           <>
             <br />
             <div className="record">
-              <span className="link" onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
-              <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'c#' : Object.keys(userGist["files"])[0].split(".")[1]} </p>
-              {(userGist["id"]) in forkUsers ? 
-                <p>{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 
-              : <p>none</p> }
+              <span onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
+              {/* <p>{Object.keys(userGist["files"])[0].split(".")[1] === "cs" ? 'c#' : Object.keys(userGist["files"])[0].split(".")[1]} </p> */}
+              <p>{getLanguage(userGist)}</p>
+                {(userGist["id"]) in forkUsers ? 
+                  <p>{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 
+                : <p>none</p> }
             </div>
             {showContent && userGist["url"] === gistApiContent.url ?
                 <div className="content">

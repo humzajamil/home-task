@@ -128,7 +128,4 @@ const App = () => {
   );
 };
 
-// me tujhe problem dikhata hn, mujhe jaha tak samjh i hai wo yahi k useState hook ki state update ni hori jab div ka data display hota hai par me dubara jese hi username wale pe koi letter likhta hn to onChange ka event triger hota hai to foran data ajata hai dekh.. ab dekh jaha N/A ara waha data hai par wo ni dikha ra shayd tab tak data set ni hora dekh jese hi username pe kuch likha data dikha dia ab ye masla hai.
-// samjh gaya dekhtey hai k kaha masla hai. 
-
 export default App;

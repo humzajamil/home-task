@@ -45,6 +45,7 @@ const App = () => {
     // console.log(Object.keys(forkUsers).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
   };
 
+  // pehle jaha state update kr rahey ho vo dikaho
 
   const getForkData = async (ids) => {
     let users = []
@@ -55,11 +56,10 @@ const App = () => {
       ))
       setForkUser(preForkUsers => {
         preForkUsers[ids] = users.slice(-3)
-        return preForkUsers; 
+        return {...preForkUsers}; 
       })
     }
     // console.log(ids, forkUsers[ids])
-    
   }
 
   const updateUserName = (e) => {
@@ -127,5 +127,8 @@ const App = () => {
     </>
   );
 };
+
+// me tujhe problem dikhata hn, mujhe jaha tak samjh i hai wo yahi k useState hook ki state update ni hori jab div ka data display hota hai par me dubara jese hi username wale pe koi letter likhta hn to onChange ka event triger hota hai to foran data ajata hai dekh.. ab dekh jaha N/A ara waha data hai par wo ni dikha ra shayd tab tak data set ni hora dekh jese hi username pe kuch likha data dikha dia ab ye masla hai.
+// samjh gaya dekhtey hai k kaha masla hai. 
 
 export default App;

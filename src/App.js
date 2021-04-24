@@ -108,10 +108,10 @@ const App = () => {
             <br />
             <div key={userGist["id"]} className="record">
               <span onClick={()=>displayContent(userGist)}>{userGist["url"]}</span>
-              <p>{getLanguage(userGist)}</p>
+              <p className="lang">{getLanguage(userGist)}</p>
                 {(userGist["id"]) in forkUsers ? 
-                  <p>{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 
-                : <p>none</p> }
+                  <p className="users">{`${forkUsers[userGist["id"]][0]}, ${forkUsers[userGist["id"]][1] !== undefined ? forkUsers[userGist["id"]][1] : null},${forkUsers[userGist["id"]][2] !== undefined ? forkUsers[userGist["id"]][2] : null}`}</p> 
+                : <p className = "users">none</p> }
             </div>
             {showContent && userGist["url"] === gistApiContent.url ?
                 <div className="content">

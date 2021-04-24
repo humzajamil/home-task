@@ -45,8 +45,6 @@ const App = () => {
     // console.log(Object.keys(forkUsers).findIndex(key => key === "2a6851cde24cdaf4b85b")) //console kia hai
   };
 
-  // pehle jaha state update kr rahey ho vo dikaho
-
   const getForkData = async (ids) => {
     let users = []
     const response = await axios.get(`https://api.github.com/gists/${ids}/forks`);
